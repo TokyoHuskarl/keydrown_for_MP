@@ -101,12 +101,16 @@ var util = (function () {
    * @param {function} handler
    */
   util.documentOn = function (eventName, handler) {
+		print("util.documentOn - this fn doesn't work on qjs")
+		/*
     if (window.addEventListener) {
       window.addEventListener(eventName, handler, false);
     } else if (document.attachEvent) {
       document.attachEvent('on' + eventName, handler);
     }
+		*/
   };
+	
 
 
   /**
@@ -114,12 +118,16 @@ var util = (function () {
    * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
    */
   util.requestAnimationFrame = (function () {
+		// print("util.requestAnimationFrame - this fn doesn't work on qjs")
+		return null;
+		/*
     return window.requestAnimationFrame  ||
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame    ||
       function( callback ){
         window.setTimeout(callback, 1000 / 60);
       };
+		*/
   })();
 
 

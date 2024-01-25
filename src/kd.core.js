@@ -48,6 +48,13 @@ var kd = (function (keysDown) {
     var currentTime = now();
     var timeSinceLastUpdate = currentTime - previousUpdateTime;
 
+
+		/*
+		 * How should I rewrite this proc?
+		 */
+
+		/*
+		 *
     util.requestAnimationFrame.call(window, function () {
       if (!isRunning) {
         return;
@@ -56,6 +63,7 @@ var kd = (function (keysDown) {
       kd.run(handler);
       handler(timeSinceLastUpdate, currentTime);
     });
+		*/
 
     previousUpdateTime = currentTime;
   };
@@ -79,6 +87,7 @@ var kd = (function (keysDown) {
     kd[keyName] = new Key(keyCode);
   });
 
+	/*
   util.documentOn('keydown', function (evt) {
     var keyCode = evt.keyCode;
     var keyName = TRANSPOSED_KEY_MAP[keyCode];
@@ -129,6 +138,7 @@ var kd = (function (keysDown) {
 
     keysDown.length = 0;
   });
+	*/
 
 
   return kd;

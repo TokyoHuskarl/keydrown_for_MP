@@ -1,4 +1,4 @@
-/*! keydrown - v1.2.8 - 2020-10-01 - http://jeremyckahn.github.com/keydrown */
+/*! keydrown - v1.2.8 - 2024-01-26 - http://jeremyckahn.github.com/keydrown */
 ;(function (window) {
 
 var util = (function () {
@@ -104,12 +104,16 @@ var util = (function () {
    * @param {function} handler
    */
   util.documentOn = function (eventName, handler) {
+		print("util.documentOn - this fn doesn't work on qjs")
+		/*
     if (window.addEventListener) {
       window.addEventListener(eventName, handler, false);
     } else if (document.attachEvent) {
       document.attachEvent('on' + eventName, handler);
     }
+		*/
   };
+	
 
 
   /**
@@ -117,12 +121,16 @@ var util = (function () {
    * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
    */
   util.requestAnimationFrame = (function () {
+		// print("util.requestAnimationFrame - this fn doesn't work on qjs")
+		return null;
+		/*
     return window.requestAnimationFrame  ||
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame    ||
       function( callback ){
         window.setTimeout(callback, 1000 / 60);
       };
+		*/
   })();
 
 
@@ -411,6 +419,13 @@ var kd = (function (keysDown) {
     var currentTime = now();
     var timeSinceLastUpdate = currentTime - previousUpdateTime;
 
+
+		/*
+		 * How should I rewrite this proc?
+		 */
+
+		/*
+		 *
     util.requestAnimationFrame.call(window, function () {
       if (!isRunning) {
         return;
@@ -419,6 +434,7 @@ var kd = (function (keysDown) {
       kd.run(handler);
       handler(timeSinceLastUpdate, currentTime);
     });
+		*/
 
     previousUpdateTime = currentTime;
   };
@@ -442,6 +458,7 @@ var kd = (function (keysDown) {
     kd[keyName] = new Key(keyCode);
   });
 
+	/*
   util.documentOn('keydown', function (evt) {
     var keyCode = evt.keyCode;
     var keyName = TRANSPOSED_KEY_MAP[keyCode];
@@ -492,6 +509,7 @@ var kd = (function (keysDown) {
 
     keysDown.length = 0;
   });
+	*/
 
 
   return kd;
@@ -499,16 +517,9 @@ var kd = (function (keysDown) {
  // The variables passed into the closure here are defined in kd.key.js.
 }(keysDown));
 
-if (typeof module === "object" && typeof module.exports === "object") {
-  // Keydrown was loaded as a CommonJS module (by Browserify, for example).
-  module.exports = kd;
-} else if (typeof define === "function" && define.amd) {
-  // Keydrown was loaded as an AMD module.
-  define(function () {
-    return kd;
-  });
-} else {
+// Keydrown_for_MP expects only used on quickjs engine run via RPG_RT.exe. 
   window.kd = kd;
-}
 
-} (window));
+
+
+} (this)); // qjs has no window API
